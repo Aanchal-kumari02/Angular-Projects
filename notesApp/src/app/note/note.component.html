@@ -1,0 +1,49 @@
+<div class="container">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNotesModal">Create Note <i class="bi bi-file-plus"></i></button>
+
+    <div class="row mt-3">
+        <div class="col-md-4" *ngFor="let list of notesListing">
+            <div class="card card-body">
+                <h5>{{list.note_title}}</h5>
+                <p class="text-muted">{{list.note_description}}</p>
+
+                <div class="d-flex align-items-center">
+                    <span style="cursor: pointer;" (click)="editNotes(list)" data-bs-toggle="modal" data-bs-target="#addNotesModal" class="mx-2">
+                        <i class="bi bi-pen"></i>
+                    </span>
+                    <span style="cursor: pointer;" (click)="deleteNote(list)">
+                        <i class="bi bi-trash"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add notes-->
+    <div class="modal fade" id="addNotesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{buttonText}} Notes</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="noteForm">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Note Title:</label>
+                            <input type="text" formControlName="note_title" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Note Description:</label>
+                            <textarea formControlName="note_description" class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" [disabled]="noteForm.invalid" (click)="onSubmit()" class="btn btn-primary">{{buttonText}} Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
