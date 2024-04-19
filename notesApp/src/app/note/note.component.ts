@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NoteService } from '../services/note.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Note } from '../interface/note';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-note',
@@ -22,6 +23,7 @@ export class NoteComponent implements OnInit {
   constructor(
     private noteService: NoteService,
     private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -65,8 +67,10 @@ export class NoteComponent implements OnInit {
 
   //get all notes
   getAllNotes(){
+    this.spinner.show();
     this.noteService.getAllNotes().subscribe((res:Note[])=>{
       console.log(res);
+      this.spinner.hide();
       this.notesListing = res;
     })
   }
